@@ -55,11 +55,13 @@ contract CoreDeploymentLibTest is Test {
             CoreDeploymentParsingLib.readDeploymentConfigValues("test/mockData/config/core/", 1337);
         deploymentData = CoreDeploymentLib.deployContracts(proxyAdmin, configData);
 
-        string memory scratchPath = "test/mockData/scratch/";
-        CoreDeploymentParsingLib.writeDeploymentJson(scratchPath, block.chainid, deploymentData);
+        string memory scratchPath = "test/mockData/scratch/test_WriteDeploymentJson/";
+        CoreDeploymentParsingLib.writeDeploymentJson(scratchPath, block.chainid, data);
 
         string memory fileName = string.concat(scratchPath, vm.toString(block.chainid), ".json");
         assertTrue(vm.exists(fileName), "Deployment file not created");
+
+        vm.removeFile(fileName);
     }
 
     function test_WriteAndReadDeploymentJson() public {
@@ -67,13 +69,15 @@ contract CoreDeploymentLibTest is Test {
             CoreDeploymentParsingLib.readDeploymentConfigValues("test/mockData/config/core/", 1337);
         deploymentData = CoreDeploymentLib.deployContracts(proxyAdmin, configData);
 
-        string memory scratchPath = "test/mockData/scratch/";
+        string memory scratchPath = "test/mockData/scratch/test_WriteAndReadDeploymentJson/";
 
         CoreDeploymentParsingLib.writeDeploymentJson(scratchPath, block.chainid, deploymentData);
 
         string memory fileName = string.concat(vm.toString(block.chainid), ".json");
 
         CoreDeploymentParsingLib.readDeploymentJson(scratchPath, fileName);
+
+        vm.removeFile(string.concat(scratchPath, fileName));
     }
 
     function test_ReadConfigFromM2DeploymentData() public {
