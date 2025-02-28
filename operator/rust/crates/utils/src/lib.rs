@@ -53,7 +53,8 @@ pub struct EigenLayerData {
 pub struct EigenLayerAddresses {
     #[serde(rename = "proxyAdmin")]
     proxy_admin: String,
-    pub delegation: String,
+    #[serde(rename = "delegationManager")]
+    pub delegation_manager: String,
     #[serde(rename = "delegationManagerImpl")]
     delegation_manager_impl: String,
     #[serde(rename = "avsDirectory")]
@@ -94,7 +95,7 @@ pub fn parse_stake_registry_address(path: &str) -> eyre::Result<Address> {
 pub fn parse_delegation_manager_address(path: &str) -> eyre::Result<Address> {
     let data = std::fs::read_to_string(path)?;
     let parsed: EigenLayerData = serde_json::from_str(&data)?;
-    let delegation_manager_address: Address = parsed.addresses.delegation.parse()?;
+    let delegation_manager_address: Address = parsed.addresses.delegation_manager.parse()?;
     Ok(delegation_manager_address)
 }
 

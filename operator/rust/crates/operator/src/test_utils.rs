@@ -353,7 +353,8 @@ mod tests {
         let s = &format!("{}/contracts/deployments/core/31337.json", &path.display());
         let el_parsed: EigenLayerData =
             serde_json::from_str(&std::fs::read_to_string(s).unwrap()).unwrap();
-        let delegation_manager_address: Address = el_parsed.addresses.delegation.parse().unwrap();
+        let delegation_manager_address: Address =
+            el_parsed.addresses.delegation_manager.parse().unwrap();
         let contract_delegation_manager = DelegationManager::new(delegation_manager_address, &pr);
 
         let is_operator = contract_delegation_manager

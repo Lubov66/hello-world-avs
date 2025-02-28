@@ -126,7 +126,7 @@ async fn register_operator() -> Result<()> {
 
     let data = std::fs::read_to_string("contracts/deployments/core/31337.json")?;
     let el_parsed: EigenLayerData = serde_json::from_str(&data)?;
-    let delegation_manager_address: Address = el_parsed.addresses.delegation.parse()?;
+    let delegation_manager_address: Address = el_parsed.addresses.delegation_manager.parse()?;
     let avs_directory_address: Address = el_parsed.addresses.avs_directory.parse()?;
 
     let elcontracts_reader_instance = ELChainReader::new(
